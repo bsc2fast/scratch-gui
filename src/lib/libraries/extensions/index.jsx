@@ -29,6 +29,9 @@ import ev3InsetIconURL from './ev3/ev3-small.svg';
 import ev3ConnectionIconURL from './ev3/ev3-hub-illustration.svg';
 import ev3ConnectionSmallIconURL from './ev3/ev3-small.svg';
 
+import kiwriousBlockImage from './kiwrious/kiwrious.png';
+import kiwriousBlockButtonImage from './kiwrious/kiwrious-small.png';
+
 import wedo2IconURL from './wedo2/wedo.png'; // TODO: Rename file names to match variable/prop names?
 import wedo2InsetIconURL from './wedo2/wedo-small.svg';
 import wedo2ConnectionIconURL from './wedo2/wedo-illustration.svg';
@@ -317,5 +320,25 @@ export default [
             />
         ),
         helpLink: 'https://scratch.mit.edu/vernier'
+    },
+    {
+        name: 'Kiwrious',
+        extensionId: 'kiwrious',
+        collaborator: 'Kiwrious',
+        iconURL: kiwriousBlockImage,
+        insetIconURL: kiwriousBlockButtonImage,
+        description: (
+            <FormattedMessage
+                defaultMessage="Scratch Blocks for Kiwrious"
+                description="Description for Kiwrious Scratch extension"
+                id="gui.extension.newblocks.description"
+            />
+        ),
+        featured: true,
+        disabled: false,
+        internetConnectionRequired: true,
+        bluetoothRequired: false,
+        helpLink: 'https://scratch.mit.edu/wedo'
+
     }
 ];
