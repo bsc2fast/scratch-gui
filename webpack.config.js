@@ -18,9 +18,12 @@ const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
+        transportMode: 'ws',
+        injectClient: false,
+        public: 'play.kiwrious.com',
         contentBase: path.resolve(__dirname, 'build'),
         host: '0.0.0.0',
-        port: process.env.PORT || 8601
+        port: process.env.PORT || 80
     },
     output: {
         library: 'GUI',
