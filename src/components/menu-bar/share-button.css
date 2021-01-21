@@ -1,7 +1,8 @@
 @import "../../css/colors.css";
 
 .share-button {
-    background: $data-primary;
+    background: #F85708;
+    border: 2px solid #F9F9F9;
 }
 
 .share-button-is-shared {

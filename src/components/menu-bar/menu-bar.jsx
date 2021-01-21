@@ -530,11 +530,11 @@ class MenuBar extends React.Component {
                                 </ProjectWatcher>
                             )
                         ) : (
-                            this.props.showComingSoon ? (
-                                <MenuBarItemTooltip id="share-button">
+                            (
+                                <Button id="share-button">
                                     <ShareButton className={styles.menuBarButton} />
-                                </MenuBarItemTooltip>
-                            ) : []
+                                </Button>
+                            )
                         )}
                         {this.props.canRemix ? remixButton : []}
                     </div>
