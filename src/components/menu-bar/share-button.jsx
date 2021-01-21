@@ -42,7 +42,9 @@ ShareButton.propTypes = {
 };
 
 ShareButton.defaultProps = {
-    onClick: () => {}
+    onClick: () => {
+        window.location = 'https://padlet.com/ychu898/49fsmsyic2yhrfr1';
+    }
 };
 
 export default ShareButton;

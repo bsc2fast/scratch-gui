@@ -27,7 +27,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
     font-weight: bold;
-    background-color: $motion-primary;
+    background-color: #F85708;
     color: $ui-white;
 }
 
@@ -172,7 +172,7 @@
 
 .account-nav-menu, .mystuff-button {
     padding: 0 .25rem;
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
 }
