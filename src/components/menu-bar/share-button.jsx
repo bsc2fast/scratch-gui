@@ -43,7 +43,7 @@ ShareButton.propTypes = {
 
 ShareButton.defaultProps = {
     onClick: () => {
-        window.location = 'https://padlet.com/ychu898/49fsmsyic2yhrfr1';
+        window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
     }
 };
 
