@@ -6,6 +6,8 @@ import Button from '../button/button.jsx';
 
 import styles from './share-button.css';
 
+import GoogleAnalytics from 'react-ga';
+
 const ShareButton = ({
     className,
     isShared,
@@ -43,6 +45,11 @@ ShareButton.propTypes = {
 
 ShareButton.defaultProps = {
     onClick: () => {
+        GoogleAnalytics.event({
+            category: 'Project',
+            action: 'Click',
+            label: 'Share Project'
+        });
         window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
     }
 };

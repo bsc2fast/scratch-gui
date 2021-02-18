@@ -32,6 +32,8 @@ import {
     SOUNDS_TAB_INDEX
 } from '../reducers/editor-tab';
 
+import GoogleAnalytics from 'react-ga';
+
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
     object[property] = function () {
@@ -315,6 +317,13 @@ class Blocks extends React.Component {
         }
     }
     onScriptGlowOn (data) {
+        if (data.id === 'kiwrious_Connect') {
+            GoogleAnalytics.event({
+                category: 'Extension',
+                action: 'Kiwrious',
+                label: 'Connected'
+            });
+        }
         this.workspace.glowStack(data.id, true);
     }
     onScriptGlowOff (data) {
