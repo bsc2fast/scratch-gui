@@ -9,6 +9,8 @@ import extensionLibraryContent from '../lib/libraries/extensions/index.jsx';
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
 
+import GoogleAnalytics from 'react-ga';
+
 const messages = defineMessages({
     extensionTitle: {
         defaultMessage: 'Choose an Extension',
@@ -42,6 +44,13 @@ class ExtensionLibrary extends React.PureComponent {
             } else {
                 this.props.vm.extensionManager.loadExtensionURL(url).then(() => {
                     this.props.onCategorySelected(id);
+                    if (id === 'kiwrious') {
+                        GoogleAnalytics.event({
+                            category: 'Extension',
+                            action: 'Kiwrious',
+                            label: 'Loaded'
+                        });
+                    }
                 });
             }
         }
