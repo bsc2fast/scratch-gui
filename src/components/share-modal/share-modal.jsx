@@ -9,7 +9,7 @@ const ShareModal = props => (
         className={styles.modalContent}
         contentLabel={'Share Project'}
         overlayClassName={styles.modalOverlay}
-        id="shareModal"
+        id="shareProject"
         onRequestClose={props.onCancel}
     >
         <div>
