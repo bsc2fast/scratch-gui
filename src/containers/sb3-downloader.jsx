@@ -22,7 +22,8 @@ class SB3Downloader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'downloadProject'
+            'downloadProject',
+            'uploadProject'
         ]);
     }
     downloadProject () {
@@ -33,13 +34,34 @@ class SB3Downloader extends React.Component {
             downloadBlob(this.props.projectFilename, content);
         });
     }
+
+    uploadProject () {
+        this.props.saveProjectSb3().then(content => {
+            if (this.props.onSaveFinished) {
+                this.props.onSaveFinished();
+            }
+            console.log('----debug-upload----');
+            const formData = new FormData();
+
+            formData.append('title', 'project.sb3');
+            formData.append('image', content);
+
+            const request = new XMLHttpRequest();
+            request.timeout = 15000;
+            request.open('POST', 'http://localhost:8000/api');
+            request.send(formData);
+        });
+    }
+
+
     render () {
         const {
             children
         } = this.props;
         return children(
             this.props.className,
-            this.downloadProject
+            this.downloadProject,
+            this.uploadProject
         );
     }
 }
