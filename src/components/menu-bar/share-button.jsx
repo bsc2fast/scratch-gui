@@ -9,8 +9,13 @@ import styles from './share-button.css';
 import GoogleAnalytics from 'react-ga';
 
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
+import {connect} from 'react-redux';
 
-const onClick = uploadProjectCallback => () => {
+import {
+    openShareModal
+} from '../../reducers/modals.js';
+
+const onClick = (uploadProjectCallback, onOpenShareProject) => () => {
     uploadProjectCallback();
     GoogleAnalytics.event({
         category: 'Project',
@@ -18,11 +23,13 @@ const onClick = uploadProjectCallback => () => {
         label: 'Share Project'
     });
     window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
-}
+    onOpenShareProject();
+};
 
 const ShareButton = ({
     isShared,
-    className
+    className,
+    onOpenShareProject
 }) => (
     <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback) => (
         <Button
@@ -31,7 +38,7 @@ const ShareButton = ({
                 styles.shareButton,
                 {[styles.shareButtonIsShared]: isShared}
             )}
-            onClick={onClick(uploadProjectCallback)}
+            onClick={onClick(uploadProjectCallback, onOpenShareProject)}
         >
             {isShared ? (
                 <FormattedMessage
@@ -52,11 +59,23 @@ const ShareButton = ({
 
 ShareButton.propTypes = {
     className: PropTypes.string,
-    isShared: PropTypes.bool
+    isShared: PropTypes.bool,
+    onOpenShareProject: PropTypes.func.isRequired
 };
 
 ShareButton.defaultProps = {
     className: ''
 };
 
-export default ShareButton;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+    onOpenShareProject: () => {
+        dispatch(openShareModal());
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ShareButton);
