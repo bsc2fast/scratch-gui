@@ -9,23 +9,37 @@ import {
     closeShareModal
 } from '../reducers/modals';
 
+import GoogleAnalytics from 'react-ga';
+
 class ShareModal extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleCancel'
+            'handleCancel',
+            'handleSubmit'
 
         ]);
-
     }
 
     handleCancel () {
         this.props.onClose();
     }
+
+    handleSubmit (uploadProjectCallback) {
+        uploadProjectCallback();
+        GoogleAnalytics.event({
+            category: 'Project',
+            action: 'Click',
+            label: 'Share Project'
+        });
+        window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+    }
+
     render () {
         return (
             <ShareModalComponent
                 onCancel={this.handleCancel}
+                onSubmit={this.handleSubmit}
             />
         );
     }

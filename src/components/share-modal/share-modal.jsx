@@ -4,6 +4,11 @@ import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import styles from './share-modal.css';
 import {FormattedMessage} from 'react-intl';
+import SB3Downloader from '../../containers/sb3-downloader.jsx';
+
+const onClick = (onSubmit, uploadProjectCallback) => () => {
+    onSubmit(uploadProjectCallback);
+};
 
 const ShareModal = props => (
     <Modal
@@ -58,17 +63,20 @@ const ShareModal = props => (
 
             </Box>
             <div>
-                <button
-                    className={styles.modalFlushBottomButton}
-                    id="projectUpload"
-                    type="submit"
-                >
-                    <FormattedMessage
-                        defaultMessage="Share!"
-                        description="Label for share project"
-                        id="gui.shareProject.shareProjectFile"
-                    />
-                </button>
+                <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback) => (
+                    <button
+                        className={styles.modalFlushBottomButton}
+                        id="projectUpload"
+                        type="submit"
+                        onClick={onClick(props.onSubmit, uploadProjectCallback)}
+                    >
+                        <FormattedMessage
+                            defaultMessage="Share!"
+                            description="Label for share project"
+                            id="gui.shareProject.shareProjectFile"
+                        />
+                    </button>
+                )}</SB3Downloader>
             </div>
         </div>
 
@@ -76,7 +84,8 @@ const ShareModal = props => (
 );
 
 ShareModal.propTypes = {
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
 };
 
 export default ShareModal;
