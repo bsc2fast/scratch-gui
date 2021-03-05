@@ -37,6 +37,8 @@ const ShareModal = props => (
                         id="projectName"
                         placeholder="Project Name"
                         spellCheck="false"
+                        onChange={props.onChangeTitle}
+                        value={props.projectName}
                     />
                 </div>
 
@@ -57,6 +59,8 @@ const ShareModal = props => (
                         id="authorName"
                         placeholder="Author Name"
                         spellCheck="false"
+                        onChange={props.onChangeAuthor}
+                        value={props.authorName}
                     />
 
                 </div>
@@ -85,7 +89,11 @@ const ShareModal = props => (
 
 ShareModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onChangeTitle: PropTypes.func.isRequired,
+    onChangeAuthor: PropTypes.func.isRequired,
+    projectName: PropTypes.string,
+    authorName: PropTypes.string
 };
 
 export default ShareModal;

@@ -16,13 +16,27 @@ class ShareModal extends React.Component {
         super(props);
         bindAll(this, [
             'handleCancel',
-            'handleSubmit'
-
+            'handleSubmit',
+            'handleChangeTitle',
+            'handleChangeAuthor'
         ]);
+
+        this.state = {
+            projectName: '',
+            authorName: ''
+        };
     }
 
     handleCancel () {
         this.props.onClose();
+    }
+
+    handleChangeTitle (event) {
+        this.setState({projectName: event.target.value});
+    }
+
+    handleChangeAuthor (event) {
+        this.setState({authorName: event.target.value});
     }
 
     handleSubmit (uploadProjectCallback) {
@@ -38,8 +52,12 @@ class ShareModal extends React.Component {
     render () {
         return (
             <ShareModalComponent
+                projectName={this.state.projectName}
+                authorName={this.state.authorName}
                 onCancel={this.handleCancel}
                 onSubmit={this.handleSubmit}
+                onChangeTitle={this.handleChangeTitle}
+                onChangeAuthor={this.handleChangeAuthor}
             />
         );
     }
