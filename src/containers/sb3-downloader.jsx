@@ -4,6 +4,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {projectTitleInitialState} from '../reducers/project-title';
 import downloadBlob from '../lib/download-blob';
+
+import GoogleAnalytics from 'react-ga';
 /**
  * Project saver component passes a downloadProject function to its child.
  * It expects this child to be a function with the signature
@@ -35,7 +37,7 @@ class SB3Downloader extends React.Component {
         });
     }
 
-    uploadProject () {
+    uploadProject (project, author) {
         this.props.saveProjectSb3().then(content => {
             if (this.props.onSaveFinished) {
                 this.props.onSaveFinished();
@@ -43,13 +45,31 @@ class SB3Downloader extends React.Component {
             console.log('----debug-upload----');
             const formData = new FormData();
 
-            formData.append('title', 'project.sb3');
+            formData.append('project', project);
+            formData.append('author', author);
             formData.append('image', content);
 
             const request = new XMLHttpRequest();
-            request.timeout = 15000;
-            request.open('POST', 'http://localhost:8000/api');
+            request.open('POST', 'http://146.148.32.205:8000/api');
             request.send(formData);
+
+            request.onload = () => {
+                if (request.status === 200) {
+                    GoogleAnalytics.event({
+                        category: 'Project',
+                        action: 'Click',
+                        label: 'Share Project'
+                    });
+                    console.log('Shared');
+                    window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+                } else {
+                    console.log('Request Failed');
+                }
+            };
+
+            request.onerror = () => {
+                console.log('Request Failed');
+            };
         });
     }
 

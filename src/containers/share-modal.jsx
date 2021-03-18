@@ -9,8 +9,6 @@ import {
     closeShareModal
 } from '../reducers/modals';
 
-import GoogleAnalytics from 'react-ga';
-
 class ShareModal extends React.Component {
     constructor (props) {
         super(props);
@@ -40,13 +38,7 @@ class ShareModal extends React.Component {
     }
 
     handleSubmit (uploadProjectCallback) {
-        uploadProjectCallback();
-        GoogleAnalytics.event({
-            category: 'Project',
-            action: 'Click',
-            label: 'Share Project'
-        });
-        window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+        uploadProjectCallback(this.state.projectName, this.state.authorName);
     }
 
     render () {
