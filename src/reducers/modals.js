@@ -13,6 +13,7 @@ const MODAL_SOUND_RECORDER = 'soundRecorder';
 const MODAL_CONNECTION = 'connectionModal';
 const MODAL_TIPS_LIBRARY = 'tipsLibrary';
 const MODAL_SHARE_PROJECT = 'shareProject';
+const MODAL_LOADING_SHARE = 'loadingShare';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
@@ -26,7 +27,8 @@ const initialState = {
     [MODAL_SOUND_RECORDER]: false,
     [MODAL_CONNECTION]: false,
     [MODAL_TIPS_LIBRARY]: false,
-    [MODAL_SHARE_PROJECT]: false
+    [MODAL_SHARE_PROJECT]: false,
+    [MODAL_LOADING_SHARE]: false
 };
 
 const reducer = function (state, action) {
@@ -89,6 +91,9 @@ const openConnectionModal = function () {
 const openShareModal = function () {
     return openModal(MODAL_SHARE_PROJECT);
 };
+const openLoadingShare = function () {
+    return openModal(MODAL_LOADING_SHARE);
+};
 const openTipsLibrary = function () {
     return openModal(MODAL_TIPS_LIBRARY);
 };
@@ -128,6 +133,9 @@ const closeConnectionModal = function () {
 const closeShareModal = function () {
     return closeModal(MODAL_SHARE_PROJECT);
 };
+const closeLoadingShare = function () {
+    return closeModal(MODAL_LOADING_SHARE);
+};
 export {
     reducer as default,
     initialState as modalsInitialState,
@@ -136,6 +144,7 @@ export {
     openCostumeLibrary,
     openExtensionLibrary,
     openLoadingProject,
+    openLoadingShare,
     openShareModal,
     openSoundLibrary,
     openSpriteLibrary,
@@ -148,6 +157,7 @@ export {
     closeCostumeLibrary,
     closeExtensionLibrary,
     closeLoadingProject,
+    closeLoadingShare,
     closeSpriteLibrary,
     closeSoundLibrary,
     closeSoundRecorder,

@@ -5,9 +5,15 @@ import Box from '../box/box.jsx';
 import styles from './share-modal.css';
 import {FormattedMessage} from 'react-intl';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
+import {connect} from 'react-redux';
 
-const onClick = (onSubmit, uploadProjectCallback) => () => {
+import {
+    openLoadingShare, closeShareModal
+} from '../../reducers/modals.js';
+
+const onClick = (onSubmit, uploadProjectCallback, onShareLoading) => () => {
     onSubmit(uploadProjectCallback);
+    onShareLoading();
 };
 
 const ShareModal = props => (
@@ -72,7 +78,7 @@ const ShareModal = props => (
                         className={styles.modalFlushBottomButton}
                         id="projectUpload"
                         type="submit"
-                        onClick={onClick(props.onSubmit, uploadProjectCallback)}
+                        onClick={onClick(props.onSubmit, uploadProjectCallback, props.onShareLoading)}
                     >
                         <FormattedMessage
                             defaultMessage="Share!"
@@ -92,8 +98,21 @@ ShareModal.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onChangeAuthor: PropTypes.func.isRequired,
+    onShareLoading: PropTypes.func.isRequired,
     projectName: PropTypes.string,
     authorName: PropTypes.string
 };
 
-export default ShareModal;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+    onShareLoading: () => {
+        dispatch(closeShareModal());
+        dispatch(openLoadingShare());
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ShareModal);

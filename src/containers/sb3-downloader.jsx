@@ -6,6 +6,11 @@ import {projectTitleInitialState} from '../reducers/project-title';
 import downloadBlob from '../lib/download-blob';
 
 import GoogleAnalytics from 'react-ga';
+
+import {
+    closeLoadingShare, openShareModal
+} from '../reducers/modals.js';
+
 /**
  * Project saver component passes a downloadProject function to its child.
  * It expects this child to be a function with the signature
@@ -60,15 +65,15 @@ class SB3Downloader extends React.Component {
                         action: 'Click',
                         label: 'Share Project'
                     });
-                    console.log('Shared');
                     window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+                    this.props.onShareSuccess();
                 } else {
-                    console.log('Request Failed');
+                    this.props.onShareFail();
                 }
             };
 
             request.onerror = () => {
-                console.log('Request Failed');
+                this.props.onShareFail();
             };
         });
     }
@@ -98,6 +103,8 @@ SB3Downloader.propTypes = {
     children: PropTypes.func,
     className: PropTypes.string,
     onSaveFinished: PropTypes.func,
+    onShareFail: PropTypes.func.isRequired,
+    onShareSuccess: PropTypes.func.isRequired,
     projectFilename: PropTypes.string,
     saveProjectSb3: PropTypes.func
 };
@@ -110,7 +117,18 @@ const mapStateToProps = state => ({
     projectFilename: getProjectFilename(state.scratchGui.projectTitle, projectTitleInitialState)
 });
 
+const mapDispatchToProps = dispatch => ({
+    onShareSuccess: () => {
+        dispatch(closeLoadingShare());
+    },
+    onShareFail: () => {
+        dispatch(closeLoadingShare());
+        dispatch(openShareModal());
+        alert('Something went wrong, please try again');
+    }
+});
+
 export default connect(
     mapStateToProps,
-    () => ({}) // omit dispatch prop
+    mapDispatchToProps
 )(SB3Downloader);

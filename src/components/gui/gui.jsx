@@ -41,6 +41,7 @@ import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
 import ShareModal from '../../containers/share-modal.jsx';
+import SharingLoaderComponent from '../sharing-loader/sharing-loader.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -88,6 +89,7 @@ const GUIComponent = props => {
         isPlayerOnly,
         isRtl,
         isShared,
+        isSharing,
         isTelemetryEnabled,
         loading,
         logo,
@@ -183,6 +185,9 @@ const GUIComponent = props => {
                 {isRendererSupported ? null : (
                     <WebGlModal isRtl={isRtl} />
                 )}
+                {isSharing ? (
+                    <SharingLoaderComponent />
+                ) : null}
                 {tipsLibraryVisible ? (
                     <TipsLibrary />
                 ) : null}
@@ -399,6 +404,7 @@ GUIComponent.propTypes = {
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
     isShared: PropTypes.bool,
+    isSharing: PropTypes.bool,
     loading: PropTypes.bool,
     logo: PropTypes.string,
     onActivateCostumesTab: PropTypes.func,
@@ -456,7 +462,8 @@ GUIComponent.defaultProps = {
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
     stageSizeMode: state.scratchGui.stageSize.stageSize,
-    shareModalVisible: state.scratchGui.modals.shareProject
+    shareModalVisible: state.scratchGui.modals.shareProject,
+    isSharing: state.scratchGui.modals.loadingShare
 });
 
 export default injectIntl(connect(
