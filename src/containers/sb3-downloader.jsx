@@ -4,6 +4,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {projectTitleInitialState} from '../reducers/project-title';
 import downloadBlob from '../lib/download-blob';
+
+import GoogleAnalytics from 'react-ga';
+
+import {
+    closeLoadingShare, openShareModal
+} from '../reducers/modals.js';
+
 /**
  * Project saver component passes a downloadProject function to its child.
  * It expects this child to be a function with the signature
@@ -22,7 +29,8 @@ class SB3Downloader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'downloadProject'
+            'downloadProject',
+            'uploadProject'
         ]);
     }
     downloadProject () {
@@ -33,13 +41,52 @@ class SB3Downloader extends React.Component {
             downloadBlob(this.props.projectFilename, content);
         });
     }
+
+    uploadProject (project, author) {
+        this.props.saveProjectSb3().then(content => {
+            if (this.props.onSaveFinished) {
+                this.props.onSaveFinished();
+            }
+            console.log('----debug-upload----');
+            const formData = new FormData();
+
+            formData.append('project', project);
+            formData.append('author', author);
+            formData.append('image', content);
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'https://padlet-service-lshnmcrzlq-uc.a.run.app/api');
+            request.send(formData);
+
+            request.onload = () => {
+                if (request.status === 200) {
+                    GoogleAnalytics.event({
+                        category: 'Project',
+                        action: 'Click',
+                        label: 'Share Project'
+                    });
+                    window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+                    this.props.onShareSuccess();
+                } else {
+                    this.props.onShareFail();
+                }
+            };
+
+            request.onerror = () => {
+                this.props.onShareFail();
+            };
+        });
+    }
+
+
     render () {
         const {
             children
         } = this.props;
         return children(
             this.props.className,
-            this.downloadProject
+            this.downloadProject,
+            this.uploadProject
         );
     }
 }
@@ -56,6 +103,8 @@ SB3Downloader.propTypes = {
     children: PropTypes.func,
     className: PropTypes.string,
     onSaveFinished: PropTypes.func,
+    onShareFail: PropTypes.func.isRequired,
+    onShareSuccess: PropTypes.func.isRequired,
     projectFilename: PropTypes.string,
     saveProjectSb3: PropTypes.func
 };
@@ -68,7 +117,18 @@ const mapStateToProps = state => ({
     projectFilename: getProjectFilename(state.scratchGui.projectTitle, projectTitleInitialState)
 });
 
+const mapDispatchToProps = dispatch => ({
+    onShareSuccess: () => {
+        dispatch(closeLoadingShare());
+    },
+    onShareFail: () => {
+        dispatch(closeLoadingShare());
+        dispatch(openShareModal());
+        alert('Something went wrong, please try again');
+    }
+});
+
 export default connect(
     mapStateToProps,
-    () => ({}) // omit dispatch prop
+    mapDispatchToProps
 )(SB3Downloader);

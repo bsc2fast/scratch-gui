@@ -6,12 +6,16 @@ import Button from '../button/button.jsx';
 
 import styles from './share-button.css';
 
-import GoogleAnalytics from 'react-ga';
+import {connect} from 'react-redux';
+
+import {
+    openShareModal
+} from '../../reducers/modals.js';
 
 const ShareButton = ({
-    className,
     isShared,
-    onClick
+    className,
+    onOpenShareProject
 }) => (
     <Button
         className={classNames(
@@ -19,7 +23,7 @@ const ShareButton = ({
             styles.shareButton,
             {[styles.shareButtonIsShared]: isShared}
         )}
-        onClick={onClick}
+        onClick={onOpenShareProject}
     >
         {isShared ? (
             <FormattedMessage
@@ -40,18 +44,22 @@ const ShareButton = ({
 ShareButton.propTypes = {
     className: PropTypes.string,
     isShared: PropTypes.bool,
-    onClick: PropTypes.func
+    onOpenShareProject: PropTypes.func.isRequired
 };
 
 ShareButton.defaultProps = {
-    onClick: () => {
-        GoogleAnalytics.event({
-            category: 'Project',
-            action: 'Click',
-            label: 'Share Project'
-        });
-        window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
-    }
+    className: ''
 };
 
-export default ShareButton;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+    onOpenShareProject: () => {
+        dispatch(openShareModal());
+    }
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ShareButton);

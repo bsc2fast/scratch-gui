@@ -1,0 +1,81 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+@import "../../css/typography.css";
+@import "../../css/z-index.css";
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $z-index-modal;
+    background-color: $ui-modal-overlay;
+}
+
+.modal-content {
+    margin: 100px auto;
+    outline: none;
+    border: .25rem solid $ui-white-transparent;
+    padding: 0;
+    border-radius: 1rem;
+    user-select: none;
+    width: 500px;
+
+    color: $text-primary;
+    overflow: hidden;
+}
+
+.body {
+    background: hsla(0, 100%, 100%, 1);
+    padding: 1.5rem 2.25rem;
+}
+
+.join-flow-input-title {
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.field:focus {
+    box-shadow: 0 0 0 0.25rem rgb(77, 151, 255, 25%);
+    outline: none;
+    border: 1px solid #4d97ff;
+    transition: all .5s ease, font-size 0s;
+}
+
+.field {
+    height: 2.75rem;
+    width: 100%;
+    border-radius: .5rem;
+    background-color: white;
+    margin-bottom: .5rem;
+    transition: all .5s ease, font-size 0s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 1rem;
+    color: #575e75;
+    font-size: .875rem;
+}
+
+.modal-flush-bottom-button:hover {
+    transition: background-color .25s ease;
+    background-color: #005766;
+}
+
+.modal-flush-bottom-button:focus {
+    outline: 0;
+}
+
+.modal-flush-bottom-button {
+    margin: 0;
+    width: 100%;
+    border: none;
+    height: 5.1875rem;
+    background-color: #084551;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: bold;
+    overflow: visible;
+}
