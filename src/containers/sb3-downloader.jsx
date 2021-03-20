@@ -55,7 +55,7 @@ class SB3Downloader extends React.Component {
             formData.append('image', content);
 
             const request = new XMLHttpRequest();
-            request.open('POST', 'http://146.148.32.205:8000/api');
+            request.open('POST', 'https://padlet-service-lshnmcrzlq-uc.a.run.app/api');
             request.send(formData);
 
             request.onload = () => {
