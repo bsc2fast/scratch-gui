@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import ShareModalComponent from '../components/share-modal/share-modal.jsx';
 
 import {
-    closeShareModal
+    closeShareModal, openLoadingShare
 } from '../reducers/modals';
 
 class ShareModal extends React.Component {
@@ -21,7 +21,9 @@ class ShareModal extends React.Component {
 
         this.state = {
             projectName: '',
-            authorName: ''
+            authorName: '',
+            authorNameRequired: false,
+            projectNameRequired: false
         };
     }
 
@@ -31,14 +33,27 @@ class ShareModal extends React.Component {
 
     handleChangeTitle (event) {
         this.setState({projectName: event.target.value});
+        this.setState({projectNameRequired: false});
     }
 
     handleChangeAuthor (event) {
         this.setState({authorName: event.target.value});
+        this.setState({authorNameRequired: false});
     }
 
     handleSubmit (uploadProjectCallback) {
-        uploadProjectCallback(this.state.projectName, this.state.authorName);
+        if (this.state.projectName.trim() === '') {
+            this.setState({projectNameRequired: true});
+        }
+
+        if (this.state.authorName.trim() === '') {
+            this.setState({authorNameRequired: true});
+        }
+
+        if (this.state.projectName.trim() === '' || this.state.authorName.trim() === '') return;
+
+        this.props.onShareLoading();
+        uploadProjectCallback(this.state.projectName.trim(), `By ${this.state.authorName.trim()}`);
     }
 
     render () {
@@ -46,6 +61,8 @@ class ShareModal extends React.Component {
             <ShareModalComponent
                 projectName={this.state.projectName}
                 authorName={this.state.authorName}
+                projectNameRequired={this.state.projectNameRequired}
+                authorNameRequired={this.state.authorNameRequired}
                 onCancel={this.handleCancel}
                 onSubmit={this.handleSubmit}
                 onChangeTitle={this.handleChangeTitle}
@@ -56,7 +73,8 @@ class ShareModal extends React.Component {
 }
 
 ShareModal.propTypes = {
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onShareLoading: PropTypes.func.isRequired
 };
 
 const mapStateToProps = () => ({});
@@ -64,6 +82,10 @@ const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch => ({
     onClose: () => {
         dispatch(closeShareModal());
+    },
+    onShareLoading: () => {
+        dispatch(closeShareModal());
+        dispatch(openLoadingShare());
     }
 });
 
