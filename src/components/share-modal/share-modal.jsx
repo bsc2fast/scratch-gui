@@ -7,13 +7,8 @@ import {FormattedMessage} from 'react-intl';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import {connect} from 'react-redux';
 
-import {
-    openLoadingShare, closeShareModal
-} from '../../reducers/modals.js';
-
-const onClick = (onSubmit, uploadProjectCallback, onShareLoading) => () => {
+const onClick = (onSubmit, uploadProjectCallback) => () => {
     onSubmit(uploadProjectCallback);
-    onShareLoading();
 };
 
 const ShareModal = props => (
@@ -34,18 +29,28 @@ const ShareModal = props => (
                             id="gui.shareProject.projectName"
                         />
                     </p>
-                    <input
-                        name="projectName"
-                        className={styles.field}
-                        autoCapitalize="off"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        id="projectName"
-                        placeholder="Project Name"
-                        spellCheck="false"
-                        onChange={props.onChangeTitle}
-                        value={props.projectName}
-                    />
+                    <div className={styles.row}>
+                        <input
+                            name="projectName"
+                            className={styles.field}
+                            autoCapitalize="off"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            id="projectName"
+                            placeholder="Project Name"
+                            spellCheck="false"
+                            onChange={props.onChangeTitle}
+                            value={props.projectName}
+                        />
+                        {props.projectNameRequired ? (
+                            <div className={styles.validationMessage}>
+                                <FormattedMessage
+                                    defaultMessage="Required"
+                                    description="Label for project name required"
+                                    id="gui.shareProject.projectRequired"
+                                />
+                            </div>) : null}
+                    </div>
                 </div>
 
                 <div>
@@ -56,18 +61,28 @@ const ShareModal = props => (
                             id="gui.shareProject.authorName"
                         />
                     </p>
-                    <input
-                        name="authorName"
-                        className={styles.field}
-                        autoCapitalize="off"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        id="authorName"
-                        placeholder="Author Name"
-                        spellCheck="false"
-                        onChange={props.onChangeAuthor}
-                        value={props.authorName}
-                    />
+                    <div className={styles.row}>
+                        <input
+                            name="authorName"
+                            className={styles.field}
+                            autoCapitalize="off"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            id="authorName"
+                            placeholder="Author Name"
+                            spellCheck="false"
+                            onChange={props.onChangeAuthor}
+                            value={props.authorName}
+                        />
+                        {props.authorNameRequired ? (
+                            <div className={styles.validationMessage}>
+                                <FormattedMessage
+                                    defaultMessage="Required"
+                                    description="Label for author name required"
+                                    id="gui.shareProject.authorRequired"
+                                />
+                            </div>) : null}
+                    </div>
 
                 </div>
 
@@ -78,7 +93,7 @@ const ShareModal = props => (
                         className={styles.modalFlushBottomButton}
                         id="projectUpload"
                         type="submit"
-                        onClick={onClick(props.onSubmit, uploadProjectCallback, props.onShareLoading)}
+                        onClick={onClick(props.onSubmit, uploadProjectCallback)}
                     >
                         <FormattedMessage
                             defaultMessage="Share!"
@@ -98,19 +113,15 @@ ShareModal.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onChangeAuthor: PropTypes.func.isRequired,
-    onShareLoading: PropTypes.func.isRequired,
     projectName: PropTypes.string,
-    authorName: PropTypes.string
+    authorName: PropTypes.string,
+    authorNameRequired: PropTypes.bool,
+    projectNameRequired: PropTypes.bool
 };
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({
-    onShareLoading: () => {
-        dispatch(closeShareModal());
-        dispatch(openLoadingShare());
-    }
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(
     mapStateToProps,
