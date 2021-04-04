@@ -4,6 +4,10 @@ import classNames from 'classnames';
 import styles from './sharing-loader.css';
 import PropTypes from 'prop-types';
 
+import topBlock from './top-block.svg';
+import middleBlock from './middle-block.svg';
+import bottomBlock from './bottom-block.svg';
+
 const messages = [
     {
         message: (
@@ -70,6 +74,20 @@ class SharingLoaderComponent extends React.Component {
                 })}
             >
                 <div className={styles.container}>
+                    <div className={styles.blockAnimation}>
+                        <img
+                            className={styles.topBlock}
+                            src={topBlock}
+                        />
+                        <img
+                            className={styles.middleBlock}
+                            src={middleBlock}
+                        />
+                        <img
+                            className={styles.bottomBlock}
+                            src={bottomBlock}
+                        />
+                    </div>
                     <div className={styles.title}>
                         {mainMessages[this.props.messageId]}
                     </div>
