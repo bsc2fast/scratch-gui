@@ -11,6 +11,30 @@ const onClick = (onSubmit, uploadProjectCallback) => () => {
     onSubmit(uploadProjectCallback);
 };
 
+const options = [{
+    value: 'default',
+    text: 'Select your group',
+    disabled: true
+}, {
+    value: 'Group A',
+    text: 'Vanilla Scratch First',
+    disabled: false
+},
+{
+    value: 'Group B',
+    text: 'Vanilla Scratch Second',
+    disabled: false
+}, {
+    value: 'Group C',
+    text: 'Kiwrious Scratch First',
+    disabled: false
+},
+{
+    value: 'Group D',
+    text: 'Kiwrious Scratch Second',
+    disabled: false
+}];
+
 const ShareModal = props => (
     <Modal
         className={styles.modalContent}
@@ -84,6 +108,33 @@ const ShareModal = props => (
                             </div>) : null}
                     </div>
 
+                </div>
+
+                <div>
+                    <p className={styles.joinFlowInputTitle}>
+                        <FormattedMessage
+                            defaultMessage="Group Name"
+                            description="Label for group name"
+                            id="gui.shareProject.groupName"
+                        />
+                    </p>
+                    <div className={styles.row}>
+                        <select
+                            name="groupNames"
+                            id="groupNames"
+                            defaultValue="default"
+                            className={styles.field}
+                        >
+                            <option />
+                            {options.map(opt => (
+                                <option
+                                    key={opt.value}
+                                    value={opt.value}
+                                    disabled={opt.disabled}
+                                >{opt.text}
+                                </option>))}
+                        </select>
+                    </div>
                 </div>
 
             </Box>
