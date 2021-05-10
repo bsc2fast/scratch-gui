@@ -11,6 +11,30 @@ const onClick = (onSubmit, uploadProjectCallback) => () => {
     onSubmit(uploadProjectCallback);
 };
 
+const options = [{
+    value: 'default',
+    text: 'Select your group',
+    disabled: true
+}, {
+    value: 'Group A',
+    text: 'Vanilla Scratch First',
+    disabled: false
+},
+{
+    value: 'Group B',
+    text: 'Vanilla Scratch Second',
+    disabled: false
+}, {
+    value: 'Group C',
+    text: 'Kiwrious Scratch First',
+    disabled: false
+},
+{
+    value: 'Group D',
+    text: 'Kiwrious Scratch Second',
+    disabled: false
+}];
+
 const ShareModal = props => (
     <Modal
         className={styles.modalContent}
@@ -86,6 +110,41 @@ const ShareModal = props => (
 
                 </div>
 
+                <div>
+                    <p className={styles.joinFlowInputTitle}>
+                        <FormattedMessage
+                            defaultMessage="Group Name"
+                            description="Label for group name"
+                            id="gui.shareProject.groupName"
+                        />
+                    </p>
+                    <div className={styles.row}>
+                        <select
+                            name="groupNames"
+                            id="groupNames"
+                            defaultValue={props.groupName}
+                            onChange={props.onChangeGroup}
+                            className={styles.field}
+                        >
+                            {options.map(opt => (
+                                <option
+                                    key={opt.value}
+                                    value={opt.value}
+                                    disabled={opt.disabled}
+                                >{opt.text}
+                                </option>))}
+                        </select>
+                        {props.groupNameRequired ? (
+                            <div className={styles.validationMessage}>
+                                <FormattedMessage
+                                    defaultMessage="Required"
+                                    description="Label for group name required"
+                                    id="gui.shareProject.groupRequired"
+                                />
+                            </div>) : null}
+                    </div>
+                </div>
+
             </Box>
             <div>
                 <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback) => (
@@ -113,10 +172,13 @@ ShareModal.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onChangeAuthor: PropTypes.func.isRequired,
+    onChangeGroup: PropTypes.func.isRequired,
     projectName: PropTypes.string,
     authorName: PropTypes.string,
+    groupName: PropTypes.string,
     authorNameRequired: PropTypes.bool,
-    projectNameRequired: PropTypes.bool
+    projectNameRequired: PropTypes.bool,
+    groupNameRequired: PropTypes.bool
 };
 
 const mapStateToProps = () => ({});
