@@ -122,10 +122,10 @@ const ShareModal = props => (
                         <select
                             name="groupNames"
                             id="groupNames"
-                            defaultValue="default"
+                            defaultValue={props.groupName}
+                            onChange={props.onChangeGroup}
                             className={styles.field}
                         >
-                            <option />
                             {options.map(opt => (
                                 <option
                                     key={opt.value}
@@ -134,6 +134,14 @@ const ShareModal = props => (
                                 >{opt.text}
                                 </option>))}
                         </select>
+                        {props.groupNameRequired ? (
+                            <div className={styles.validationMessage}>
+                                <FormattedMessage
+                                    defaultMessage="Required"
+                                    description="Label for group name required"
+                                    id="gui.shareProject.groupRequired"
+                                />
+                            </div>) : null}
                     </div>
                 </div>
 
@@ -164,10 +172,13 @@ ShareModal.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
     onChangeAuthor: PropTypes.func.isRequired,
+    onChangeGroup: PropTypes.func.isRequired,
     projectName: PropTypes.string,
     authorName: PropTypes.string,
+    groupName: PropTypes.string,
     authorNameRequired: PropTypes.bool,
-    projectNameRequired: PropTypes.bool
+    projectNameRequired: PropTypes.bool,
+    groupNameRequired: PropTypes.bool
 };
 
 const mapStateToProps = () => ({});
