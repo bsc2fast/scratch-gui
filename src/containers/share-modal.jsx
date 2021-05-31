@@ -16,17 +16,14 @@ class ShareModal extends React.Component {
             'handleCancel',
             'handleSubmit',
             'handleChangeTitle',
-            'handleChangeAuthor',
-            'handleChangeGroup'
+            'handleChangeAuthor'
         ]);
 
         this.state = {
             projectName: '',
             authorName: '',
-            groupName: 'default',
             authorNameRequired: false,
-            projectNameRequired: false,
-            groupNameRequired: false
+            projectNameRequired: false
         };
     }
 
@@ -44,11 +41,6 @@ class ShareModal extends React.Component {
         this.setState({authorNameRequired: false});
     }
 
-    handleChangeGroup (event) {
-        this.setState({groupName: event.target.value});
-        this.setState({groupNameRequired: false});
-    }
-
     handleSubmit (uploadProjectCallback) {
         if (this.state.projectName.trim() === '') {
             this.setState({projectNameRequired: true});
@@ -58,16 +50,10 @@ class ShareModal extends React.Component {
             this.setState({authorNameRequired: true});
         }
 
-        if (this.state.groupName.trim() === 'default') {
-            this.setState({groupNameRequired: true});
-        }
-
-        if (this.state.projectName.trim() === '' || this.state.authorName.trim() === '' ||
-            this.state.groupName.trim() === 'default') return;
+        if (this.state.projectName.trim() === '' || this.state.authorName.trim() === '') return;
 
         this.props.onShareLoading();
-        uploadProjectCallback(this.state.projectName.trim(),
-            `By ${this.state.authorName.trim()} - ${this.state.groupName.trim()}`);
+        uploadProjectCallback(this.state.projectName.trim(), `By ${this.state.authorName.trim()}`);
     }
 
     render () {
@@ -75,15 +61,12 @@ class ShareModal extends React.Component {
             <ShareModalComponent
                 projectName={this.state.projectName}
                 authorName={this.state.authorName}
-                groupName={this.state.groupName}
                 projectNameRequired={this.state.projectNameRequired}
                 authorNameRequired={this.state.authorNameRequired}
-                groupNameRequired={this.state.groupNameRequired}
                 onCancel={this.handleCancel}
                 onSubmit={this.handleSubmit}
                 onChangeTitle={this.handleChangeTitle}
                 onChangeAuthor={this.handleChangeAuthor}
-                onChangeGroup={this.handleChangeGroup}
             />
         );
     }
