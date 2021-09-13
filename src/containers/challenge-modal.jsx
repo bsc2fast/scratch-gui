@@ -16,14 +16,25 @@ class ChallengeModal extends React.Component {
             'handleCancel',
             'handleSubmit',
             'handleChangeTitle',
-            'handleChangeAuthor'
+            'handleChangeDesc',
+            'handleChangeFirstName',
+            'handleChangeLastName',
+            'handleChangeEmail',
+            'handleChangeCountry',
+            'handleTerms',
+            'handleDOB'
         ]);
 
         this.state = {
             projectName: '',
-            authorName: '',
-            authorNameRequired: false,
-            projectNameRequired: false
+            projectDesc: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            country: 'default',
+            dob: '',
+            terms: false,
+            isSubmitDisabled: true
         };
     }
 
@@ -33,40 +44,80 @@ class ChallengeModal extends React.Component {
 
     handleChangeTitle (event) {
         this.setState({projectName: event.target.value});
-        this.setState({projectNameRequired: false});
+        this.handleNonEmptyFields();
     }
 
-    handleChangeAuthor (event) {
-        this.setState({authorName: event.target.value});
-        this.setState({authorNameRequired: false});
+    handleChangeDesc (event) {
+        this.setState({projectDesc: event.target.value});
+    }
+
+    handleChangeFirstName (event) {
+        this.setState({firstName: event.target.value});
+        this.handleNonEmptyFields();
+    }
+
+    handleChangeLastName (event) {
+        this.setState({lastName: event.target.value});
+        this.handleNonEmptyFields();
+    }
+
+    handleChangeEmail (event) {
+        this.setState({email: event.target.value});
+        this.handleNonEmptyFields();
+    }
+
+    handleChangeCountry (event) {
+        this.setState({country: event.target.value});
+        this.handleNonEmptyFields();
+    }
+
+    handleDOB (event) {
+        this.setState({dob: event.target.value});
+        this.handleNonEmptyFields();
+    }
+
+    handleTerms (event) {
+        this.setState({terms: event.target.checked}, () => {
+            this.handleNonEmptyFields();
+        });
+
     }
 
     handleSubmit (uploadProjectCallback) {
-        if (this.state.projectName.trim() === '') {
-            this.setState({projectNameRequired: true});
-        }
-
-        if (this.state.authorName.trim() === '') {
-            this.setState({authorNameRequired: true});
-        }
-
-        if (this.state.projectName.trim() === '' || this.state.authorName.trim() === '') return;
+        if (this.state.isSubmitDisabled) return;
 
         this.props.onShareLoading();
-        uploadProjectCallback(this.state.projectName.trim(), `By ${this.state.authorName.trim()}`);
+        uploadProjectCallback(this.state.projectName.trim(), `By ${this.state.firstName.trim()}`);
+    }
+
+    handleNonEmptyFields () {
+        this.setState({isSubmitDisabled: this.state.projectName.trim() === '' || this.state.firstName.trim() === '' ||
+                this.state.lastName.trim() === '' || this.state.email.trim() === '' || this.state.dob.trim() === '' ||
+                this.state.country.trim() === 'default' || !this.state.terms});
     }
 
     render () {
         return (
             <ChallengeModalComponent
                 projectName={this.state.projectName}
-                authorName={this.state.authorName}
-                projectNameRequired={this.state.projectNameRequired}
-                authorNameRequired={this.state.authorNameRequired}
+                projectDesc={this.state.projectDesc}
+                firstName={this.state.firstName}
+                lastName={this.state.lastName}
+                email={this.state.email}
+                country={this.state.country}
+                dob={this.state.dob}
+                terms={this.state.terms}
+                isSubmitDisabled={this.state.isSubmitDisabled}
                 onCancel={this.handleCancel}
                 onSubmit={this.handleSubmit}
                 onChangeTitle={this.handleChangeTitle}
-                onChangeAuthor={this.handleChangeAuthor}
+                onChangeDesc={this.handleChangeDesc}
+                onChangeFirstName={this.handleChangeFirstName}
+                onChangeLastName={this.handleChangeLastName}
+                onChangeEmail={this.handleChangeEmail}
+                onChangeCountry={this.handleChangeCountry}
+                onChangeDOB={this.handleDOB}
+                onChangeTerms={this.handleTerms}
             />
         );
     }

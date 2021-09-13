@@ -22,6 +22,32 @@ const ChallengeModal = props => (
     >
         <div>
             <Box className={styles.body}>
+
+                <div>
+                    <div className={styles.challengeTitle}>
+                        <FormattedMessage
+                            defaultMessage="Get Coding and be in to Win!"
+                            id="gui.shareProject.challenge"
+                        />
+                    </div>
+                    <br />
+                    <div className={styles.challengeDescription}>
+                        <a
+                            className={styles.challengeDescription}
+                            href="https://ahlab.org"
+                            target="_blank"
+                            referrerPolicy="no-referrer"
+                            rel="noreferrer"
+                        >
+                            <FormattedMessage
+                                defaultMessage="Check out the Challenge"
+                                id="gui.shareProject.readMore"
+                            />
+                        </a>
+                    </div>
+
+                </div>
+
                 <div className={styles.multiItemRow}>
                     <input
                         name="projectName"
@@ -48,15 +74,15 @@ const ChallengeModal = props => (
                         id="projectDesc"
                         placeholder="Project Description"
                         spellCheck="false"
-                        onChange={props.onChangeTitle}
-                        value={props.projectName}
+                        onChange={props.onChangeDesc}
+                        value={props.projectDesc}
                     />
                 </div>
 
                 <div>
                     <div className={styles.multiItemRow}>
                         <input
-                            name="authorName"
+                            name="firstName"
                             className={styles.fieldShort}
                             autoCapitalize="off"
                             autoComplete="off"
@@ -64,11 +90,11 @@ const ChallengeModal = props => (
                             id="authorName"
                             placeholder="First Name *"
                             spellCheck="false"
-                            onChange={props.onChangeAuthor}
-                            value={props.authorName}
+                            onChange={props.onChangeFirstName}
+                            value={props.firstName}
                         />
                         <input
-                            name="authorName"
+                            name="lastName"
                             className={styles.fieldShort}
                             autoCapitalize="off"
                             autoComplete="off"
@@ -76,26 +102,50 @@ const ChallengeModal = props => (
                             id="authorName"
                             placeholder="Last Name *"
                             spellCheck="false"
-                            onChange={props.onChangeAuthor}
-                            value={props.authorName}
+                            onChange={props.onChangeLastName}
+                            value={props.lastName}
+                        />
+                    </div>
+
+                    <div className={styles.multiItemRow}>
+                        <input
+                            name="email"
+                            className={styles.fieldShort}
+                            autoCapitalize="off"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            id="email"
+                            placeholder="Email *"
+                            spellCheck="false"
+                            onChange={props.onChangeEmail}
+                            value={props.email}
                         />
                     </div>
 
                     <div>
                         <div className={styles.multiItemRow}>
                             <input
-                                name="email"
+                                name="dob"
+                                type="text"
+                                /* eslint-disable-next-line no-return-assign,react/jsx-no-bind */
+                                onFocus={e => e.target.type = 'date'}
+                                min={4}
+                                max={30}
                                 className={styles.fieldShort}
                                 autoCapitalize="off"
                                 autoComplete="off"
                                 autoCorrect="off"
-                                id="email"
-                                placeholder="Email *"
+                                id="dob"
+                                placeholder="Date of Birth *"
                                 spellCheck="false"
-                                onChange={props.onChangeAuthor}
-                                value={props.authorName}
+                                value={props.dob}
+                                onChange={props.onChangeDOB}
                             />
-                            <CountryList className={styles.fieldShort} />
+                            <CountryList
+                                className={styles.fieldShort}
+                                onChange={props.onChangeCountry}
+                                defaultValue={props.country}
+                            />
                         </div>
                     </div>
                 </div>
@@ -106,6 +156,8 @@ const ChallengeModal = props => (
                         type="checkbox"
                         id="terms"
                         name="terms"
+                        checked={props.terms}
+                        onChange={props.onChangeTerms}
                     />
                     <label
                         className={styles.terms}
@@ -141,6 +193,7 @@ const ChallengeModal = props => (
                 <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback) => (
                     <button
                         className={styles.modalFlushBottomButton}
+                        disabled={props.isSubmitDisabled}
                         id="projectUpload"
                         type="submit"
                         onClick={onClick(props.onSubmit, uploadProjectCallback)}
@@ -162,9 +215,22 @@ ChallengeModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
-    onChangeAuthor: PropTypes.func.isRequired,
+    onChangeDesc: PropTypes.func.isRequired,
+    onChangeFirstName: PropTypes.func.isRequired,
+    onChangeLastName: PropTypes.func.isRequired,
+    onChangeEmail: PropTypes.func.isRequired,
+    onChangeCountry: PropTypes.func.isRequired,
+    onChangeDOB: PropTypes.func.isRequired,
+    onChangeTerms: PropTypes.func.isRequired,
     projectName: PropTypes.string,
-    authorName: PropTypes.string
+    projectDesc: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    country: PropTypes.string,
+    dob: PropTypes.string,
+    terms: PropTypes.bool,
+    isSubmitDisabled: PropTypes.bool
 };
 
 const mapStateToProps = () => ({});

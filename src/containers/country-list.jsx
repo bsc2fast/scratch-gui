@@ -3,7 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const CountryList = ({
-    className
+    className,
+    onChange,
+    defaultValue
 }) => (
     <select
         className={className}
@@ -12,10 +14,11 @@ const CountryList = ({
         autoComplete="off"
         autoCorrect="off"
         id="country"
-        defaultValue="default"
+        defaultValue={defaultValue}
         spellCheck="false"
+        onChange={onChange}
     >
-        <option value="default" disabled={true}>Select Country *</option>
+        <option value="default" disabled>Select Country *</option>
         <option value="Afganistan">Afghanistan</option>
         <option value="Albania">Albania</option>
         <option value="Algeria">Algeria</option>
@@ -266,7 +269,9 @@ const CountryList = ({
 );
 
 CountryList.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func
 };
 
 const mapStateToProps = () => ({});
