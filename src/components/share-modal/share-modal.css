@@ -26,6 +26,18 @@
     overflow: hidden;
 }
 
+.modal-content-large {
+    margin: 100px auto;
+    outline: none;
+    border: .25rem solid $ui-white-transparent;
+    padding: 0;
+    border-radius: 1rem;
+    user-select: none;
+    width: 600px;
+    color: $text-primary;
+    overflow: hidden;
+}
+
 .body {
     background: hsla(0, 100%, 100%, 1);
     padding: 1.5rem 2.25rem;
@@ -56,6 +68,46 @@
     font-size: .875rem;
 }
 
+.field-short:focus {
+    box-shadow: 0 0 0 0.25rem rgb(77, 151, 255, 25%);
+    outline: none;
+    border: 1px solid #4d97ff;
+    transition: all .5s ease, font-size 0s;
+}
+
+.field-short {
+    height: 2.75rem;
+    width: 100%;
+    border-radius: .5rem;
+    background-color: white;
+    margin: 0.5rem;
+    transition: all .5s ease, font-size 0s;
+    border: 1px solid rgb(202, 202, 202);
+    padding: 0 1rem;
+    color: #575e75;
+    font-size: .875rem;
+}
+
+.text-area-field:focus {
+    box-shadow: 0 0 0 0.25rem rgb(77, 151, 255, 25%);
+    outline: none;
+    border: 1px solid #4d97ff;
+    transition: all .5s ease, font-size 0s;
+}
+
+.text-area-field {
+    width: 100%;
+    border-radius: .5rem;
+    background-color: white;
+    margin: 0.5rem;
+    transition: all .5s ease, font-size 0s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0.8rem 1rem;
+    color: #575e75;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: .875rem;
+}
+
 .modal-flush-bottom-button:hover {
     transition: background-color .25s ease;
     background-color: #005766;
@@ -82,6 +134,23 @@
 
 .row {
     position: relative;
+}
+
+.multi-item-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox {
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+}
+.terms {
+    width: 100%;
+    color: #8a91a8;
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+    font-size: .75rem;
 }
 
 .validation-message:before {

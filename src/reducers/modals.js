@@ -12,6 +12,7 @@ const MODAL_SOUND_RECORDER = 'soundRecorder';
 const MODAL_CONNECTION = 'connectionModal';
 const MODAL_TIPS_LIBRARY = 'tipsLibrary';
 const MODAL_SHARE_PROJECT = 'shareProject';
+const MODAL_SUBMIT_CHALLENGE = 'submitChallenge';
 const MODAL_LOADING_SHARE = 'loadingShare';
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
     [MODAL_CONNECTION]: false,
     [MODAL_TIPS_LIBRARY]: false,
     [MODAL_SHARE_PROJECT]: false,
+    [MODAL_SUBMIT_CHALLENGE]: false,
     [MODAL_LOADING_SHARE]: false
 };
 
@@ -86,6 +88,9 @@ const openConnectionModal = function () {
 const openShareModal = function () {
     return openModal(MODAL_SHARE_PROJECT);
 };
+const openChallengeModal = function () {
+    return openModal(MODAL_SUBMIT_CHALLENGE);
+};
 const openLoadingShare = function () {
     return openModal(MODAL_LOADING_SHARE);
 };
@@ -125,6 +130,9 @@ const closeConnectionModal = function () {
 const closeShareModal = function () {
     return closeModal(MODAL_SHARE_PROJECT);
 };
+const closeChallengeModal = function () {
+    return closeModal(MODAL_SUBMIT_CHALLENGE);
+};
 const closeLoadingShare = function () {
     return closeModal(MODAL_LOADING_SHARE);
 };
@@ -137,6 +145,7 @@ export {
     openLoadingProject,
     openLoadingShare,
     openShareModal,
+    openChallengeModal,
     openSoundLibrary,
     openSpriteLibrary,
     openSoundRecorder,
@@ -154,5 +163,6 @@ export {
     closeTelemetryModal,
     closeTipsLibrary,
     closeConnectionModal,
-    closeShareModal
+    closeShareModal,
+    closeChallengeModal
 };

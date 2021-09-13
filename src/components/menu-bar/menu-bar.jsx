@@ -13,6 +13,7 @@ import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import CommunityButton from './community-button.jsx';
 import ShareButton from './share-button.jsx';
+import ChallengeButton from './challenge-button.jsx';
 import {ComingSoonTooltip} from '../coming-soon/coming-soon.jsx';
 import Divider from '../divider/divider.jsx';
 import LanguageSelector from '../../containers/language-selector.jsx';
@@ -29,7 +30,7 @@ import DeletionRestorer from '../../containers/deletion-restorer.jsx';
 import TurboMode from '../../containers/turbo-mode.jsx';
 import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 
-import {openTipsLibrary} from '../../reducers/modals';
+import {openChallengeModal, openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     autoUpdateProject,
@@ -169,6 +170,7 @@ class MenuBar extends React.Component {
             'handleClickSaveAsCopy',
             'handleClickSeeCommunity',
             'handleClickShare',
+            'handleSubmitChallenge',
             'handleKeyPress',
             'handleLanguageMouseUp',
             'handleRestoreOption',
@@ -229,6 +231,9 @@ class MenuBar extends React.Component {
                 waitForUpdate(false); // immediately transition to project page
             }
         }
+    }
+    handleSubmitChallenge () {
+        this.props.onClickSubmitChallenge();
     }
     handleRestoreOption (restoreFun) {
         return () => {
@@ -598,6 +603,14 @@ class MenuBar extends React.Component {
                         )}
                         {this.props.canRemix ? remixButton : []}
                     </div>
+                    <div className={classNames(styles.menuBarItem)}>
+                        <Button id="challenge-button">
+                            <ChallengeButton
+                                className={styles.menuBarButton}
+                                onClick={this.handleSubmitChallenge}
+                            />
+                        </Button>
+                    </div>
                     <div className={classNames(styles.menuBarItem, styles.communityButtonWrapper)}>
                         {this.props.enableCommunity ? (
                             (this.props.isShowingProject || this.props.isUpdating) && (
@@ -808,6 +821,7 @@ MenuBar.propTypes = {
     onClickRemix: PropTypes.func,
     onClickSave: PropTypes.func,
     onClickSaveAsCopy: PropTypes.func,
+    onClickSubmitChallenge: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
     onOpenTipLibrary: PropTypes.func,
@@ -880,6 +894,7 @@ const mapDispatchToProps = dispatch => ({
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
+    onClickSubmitChallenge: () => dispatch(openChallengeModal()),
     onSeeCommunity: () => dispatch(setPlayer(true))
 });
 

@@ -41,6 +41,7 @@ import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
 import ShareModal from '../../containers/share-modal.jsx';
+import ChallengeModal from '../../containers/challenge-modal.jsx';
 import SharingLoaderComponent from '../sharing-loader/sharing-loader.jsx';
 
 const messages = defineMessages({
@@ -117,6 +118,7 @@ const GUIComponent = props => {
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
         shareModalVisible,
+        challengeModalVisible,
         showComingSoon,
         soundsTabVisible,
         stageSizeMode,
@@ -204,6 +206,9 @@ const GUIComponent = props => {
                 ) : null}
                 {shareModalVisible ? (
                     <ShareModal />
+                ) : null}
+                {challengeModalVisible ? (
+                    <ChallengeModal />
                 ) : null}
                 {costumeLibraryVisible ? (
                     <CostumeLibrary
@@ -430,6 +435,7 @@ GUIComponent.propTypes = {
     onToggleLoginOpen: PropTypes.func,
     renderLogin: PropTypes.func,
     shareModalVisible: PropTypes.bool,
+    challengeModalVisible: PropTypes.bool,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
@@ -463,6 +469,7 @@ const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
     stageSizeMode: state.scratchGui.stageSize.stageSize,
     shareModalVisible: state.scratchGui.modals.shareProject,
+    challengeModalVisible: state.scratchGui.modals.submitChallenge,
     isSharing: state.scratchGui.modals.loadingShare
 });
 
