@@ -43,8 +43,9 @@ class ChallengeModal extends React.Component {
     }
 
     handleChangeTitle (event) {
-        this.setState({projectName: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({projectName: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleChangeDesc (event) {
@@ -52,35 +53,39 @@ class ChallengeModal extends React.Component {
     }
 
     handleChangeFirstName (event) {
-        this.setState({firstName: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({firstName: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleChangeLastName (event) {
-        this.setState({lastName: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({lastName: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleChangeEmail (event) {
-        this.setState({email: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({email: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleChangeCountry (event) {
-        this.setState({country: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({country: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleDOB (event) {
-        this.setState({dob: event.target.value});
-        this.handleNonEmptyFields();
+        this.setState({dob: event.target.value}, () => {
+            this.handleNonEmptyFields();
+        });
     }
 
     handleTerms (event) {
         this.setState({terms: event.target.checked}, () => {
             this.handleNonEmptyFields();
         });
-
     }
 
     handleSubmit (uploadProjectCallback) {
