@@ -8,7 +8,7 @@ import downloadBlob from '../lib/download-blob';
 import GoogleAnalytics from 'react-ga';
 
 import {
-    closeLoadingShare, openShareModal
+    closeChallengeModal, closeLoadingShare, openShareModal
 } from '../reducers/modals.js';
 
 /**
@@ -30,7 +30,8 @@ class SB3Downloader extends React.Component {
         super(props);
         bindAll(this, [
             'downloadProject',
-            'uploadProject'
+            'uploadProject',
+            'uploadChallenge'
         ]);
     }
     downloadProject () {
@@ -78,6 +79,36 @@ class SB3Downloader extends React.Component {
         });
     }
 
+    uploadChallenge (project, submission) {
+        this.props.saveProjectSb3().then(content => {
+            if (this.props.onSaveFinished) {
+                this.props.onSaveFinished();
+            }
+
+            const formData = new FormData();
+
+            formData.append('project', project);
+            formData.append('author', submission);
+            formData.append('image', content);
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'https://challenge-service-lshnmcrzlq-uc.a.run.app/api');
+            request.send(formData);
+
+            request.onload = () => {
+                if (request.status === 200) {
+                    this.props.onShareSuccess();
+                } else {
+                    this.props.onChallengeFail();
+                }
+            };
+
+            request.onerror = () => {
+                this.props.onChallengeFail();
+            };
+        });
+    }
+
 
     render () {
         const {
@@ -86,7 +117,8 @@ class SB3Downloader extends React.Component {
         return children(
             this.props.className,
             this.downloadProject,
-            this.uploadProject
+            this.uploadProject,
+            this.uploadChallenge
         );
     }
 }
@@ -105,6 +137,7 @@ SB3Downloader.propTypes = {
     onSaveFinished: PropTypes.func,
     onShareFail: PropTypes.func.isRequired,
     onShareSuccess: PropTypes.func.isRequired,
+    onChallengeFail: PropTypes.func.isRequired,
     projectFilename: PropTypes.string,
     saveProjectSb3: PropTypes.func
 };
@@ -124,6 +157,11 @@ const mapDispatchToProps = dispatch => ({
     onShareFail: () => {
         dispatch(closeLoadingShare());
         dispatch(openShareModal());
+        alert('Something went wrong, please try again');
+    },
+    onChallengeFail: () => {
+        dispatch(closeLoadingShare());
+        dispatch(closeChallengeModal());
         alert('Something went wrong, please try again');
     }
 });

@@ -88,11 +88,11 @@ class ChallengeModal extends React.Component {
         });
     }
 
-    handleSubmit (uploadProjectCallback) {
+    handleSubmit (uploadSubmissionCallback) {
         if (this.state.isSubmitDisabled) return;
 
         this.props.onShareLoading();
-        uploadProjectCallback(this.state.projectName.trim(), `By ${this.state.firstName.trim()}`);
+        uploadSubmissionCallback(this.state.projectName.trim(), JSON.stringify(this.state));
     }
 
     handleNonEmptyFields () {

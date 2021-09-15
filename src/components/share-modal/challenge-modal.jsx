@@ -8,8 +8,8 @@ import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import {connect} from 'react-redux';
 import CountryList from '../../containers/country-list.jsx';
 
-const onClick = (onSubmit, uploadProjectCallback) => () => {
-    onSubmit(uploadProjectCallback);
+const onClick = (onSubmit, uploadSubmissionCallback) => () => {
+    onSubmit(uploadSubmissionCallback);
 };
 
 const ChallengeModal = props => (
@@ -115,7 +115,7 @@ const ChallengeModal = props => (
                             autoComplete="off"
                             autoCorrect="off"
                             id="email"
-                            placeholder="Email *"
+                            placeholder="Parent's Email *"
                             spellCheck="false"
                             onChange={props.onChangeEmail}
                             value={props.email}
@@ -190,13 +190,13 @@ const ChallengeModal = props => (
 
             </Box>
             <div>
-                <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback) => (
+                <SB3Downloader>{(_, downloadProjectCallback, uploadProjectCallback, uploadSubmissionCallback) => (
                     <button
                         className={styles.modalFlushBottomButton}
                         disabled={props.isSubmitDisabled}
                         id="projectUpload"
                         type="submit"
-                        onClick={onClick(props.onSubmit, uploadProjectCallback)}
+                        onClick={onClick(props.onSubmit, uploadSubmissionCallback)}
                     >
                         <FormattedMessage
                             defaultMessage="Submit!"
