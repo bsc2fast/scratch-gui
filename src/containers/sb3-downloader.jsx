@@ -8,7 +8,7 @@ import downloadBlob from '../lib/download-blob';
 import GoogleAnalytics from 'react-ga';
 
 import {
-    closeChallengeModal, closeLoadingShare, openShareModal
+    closeChallengeModal, closeLoadingShare, openShareModal, openConfirmationModal
 } from '../reducers/modals.js';
 
 /**
@@ -97,7 +97,7 @@ class SB3Downloader extends React.Component {
 
             request.onload = () => {
                 if (request.status === 200) {
-                    this.props.onShareSuccess();
+                    this.props.onSubmitSuccess();
                 } else {
                     this.props.onChallengeFail();
                 }
@@ -137,6 +137,7 @@ SB3Downloader.propTypes = {
     onSaveFinished: PropTypes.func,
     onShareFail: PropTypes.func.isRequired,
     onShareSuccess: PropTypes.func.isRequired,
+    onSubmitSuccess: PropTypes.func.isRequired,
     onChallengeFail: PropTypes.func.isRequired,
     projectFilename: PropTypes.string,
     saveProjectSb3: PropTypes.func
@@ -153,6 +154,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onShareSuccess: () => {
         dispatch(closeLoadingShare());
+    },
+    onSubmitSuccess: () => {
+        dispatch(closeLoadingShare());
+        dispatch(openConfirmationModal());
     },
     onShareFail: () => {
         dispatch(closeLoadingShare());

@@ -14,6 +14,7 @@ const MODAL_TIPS_LIBRARY = 'tipsLibrary';
 const MODAL_SHARE_PROJECT = 'shareProject';
 const MODAL_SUBMIT_CHALLENGE = 'submitChallenge';
 const MODAL_LOADING_SHARE = 'loadingShare';
+const MODAL_PROJECT_SUBMITTED = 'projectSubmitted';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
@@ -28,7 +29,8 @@ const initialState = {
     [MODAL_TIPS_LIBRARY]: false,
     [MODAL_SHARE_PROJECT]: false,
     [MODAL_SUBMIT_CHALLENGE]: false,
-    [MODAL_LOADING_SHARE]: false
+    [MODAL_LOADING_SHARE]: false,
+    [MODAL_PROJECT_SUBMITTED]: false
 };
 
 const reducer = function (state, action) {
@@ -91,6 +93,9 @@ const openShareModal = function () {
 const openChallengeModal = function () {
     return openModal(MODAL_SUBMIT_CHALLENGE);
 };
+const openConfirmationModal = function () {
+    return openModal(MODAL_PROJECT_SUBMITTED);
+};
 const openLoadingShare = function () {
     return openModal(MODAL_LOADING_SHARE);
 };
@@ -99,6 +104,9 @@ const openTipsLibrary = function () {
 };
 const closeBackdropLibrary = function () {
     return closeModal(MODAL_BACKDROP_LIBRARY);
+};
+const closeConfirmationModal = function () {
+    return closeModal(MODAL_PROJECT_SUBMITTED);
 };
 const closeCostumeLibrary = function () {
     return closeModal(MODAL_COSTUME_LIBRARY);
@@ -146,6 +154,7 @@ export {
     openLoadingShare,
     openShareModal,
     openChallengeModal,
+    openConfirmationModal,
     openSoundLibrary,
     openSpriteLibrary,
     openSoundRecorder,
@@ -153,6 +162,7 @@ export {
     openTipsLibrary,
     openConnectionModal,
     closeBackdropLibrary,
+    closeConfirmationModal,
     closeCostumeLibrary,
     closeExtensionLibrary,
     closeLoadingProject,

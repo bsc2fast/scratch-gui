@@ -43,6 +43,7 @@ import soundsIcon from './icon--sounds.svg';
 import ShareModal from '../../containers/share-modal.jsx';
 import ChallengeModal from '../../containers/challenge-modal.jsx';
 import SharingLoaderComponent from '../sharing-loader/sharing-loader.jsx';
+import ConfirmationModal from '../../containers/confirmation-modal.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -118,6 +119,7 @@ const GUIComponent = props => {
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
         shareModalVisible,
+        confirmationModalVisible,
         challengeModalVisible,
         showComingSoon,
         soundsTabVisible,
@@ -206,6 +208,9 @@ const GUIComponent = props => {
                 ) : null}
                 {shareModalVisible ? (
                     <ShareModal />
+                ) : null}
+                {confirmationModalVisible ? (
+                    <ConfirmationModal />
                 ) : null}
                 {challengeModalVisible ? (
                     <ChallengeModal />
@@ -435,6 +440,7 @@ GUIComponent.propTypes = {
     onToggleLoginOpen: PropTypes.func,
     renderLogin: PropTypes.func,
     shareModalVisible: PropTypes.bool,
+    confirmationModalVisible: PropTypes.bool,
     challengeModalVisible: PropTypes.bool,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
@@ -470,6 +476,7 @@ const mapStateToProps = state => ({
     stageSizeMode: state.scratchGui.stageSize.stageSize,
     shareModalVisible: state.scratchGui.modals.shareProject,
     challengeModalVisible: state.scratchGui.modals.submitChallenge,
+    confirmationModalVisible: state.scratchGui.modals.projectSubmitted,
     isSharing: state.scratchGui.modals.loadingShare
 });
 
