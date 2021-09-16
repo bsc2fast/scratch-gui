@@ -6,7 +6,7 @@ import styles from './share-modal.css';
 import {FormattedMessage} from 'react-intl';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import {connect} from 'react-redux';
-import CountryList from '../../containers/country-list.jsx';
+import CountryList from './country-list.jsx';
 
 const onClick = (onSubmit, uploadSubmissionCallback) => () => {
     onSubmit(uploadSubmissionCallback);
@@ -129,8 +129,6 @@ const ChallengeModal = props => (
                                 type="text"
                                 /* eslint-disable-next-line no-return-assign,react/jsx-no-bind */
                                 onFocus={e => e.target.type = 'date'}
-                                min={4}
-                                max={30}
                                 className={styles.fieldShort}
                                 autoCapitalize="off"
                                 autoComplete="off"

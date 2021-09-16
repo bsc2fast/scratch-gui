@@ -40,9 +40,19 @@ const messages = [
 const mainMessages = {
     'gui.shareLoader.headline': (
         <FormattedMessage
-            defaultMessage="Sharing Your Project"
+            defaultMessage="Submitting Your Project"
             description="Main loading message"
             id="gui.shareLoader.headline"
+        />
+    )
+};
+
+const subMessages = {
+    'gui.shareLoader.subHeadline': (
+        <FormattedMessage
+            defaultMessage="Please keep your browser open"
+            description="Sub loading message"
+            id="gui.shareLoader.subHeadline"
         />
     )
 };
@@ -91,6 +101,9 @@ class SharingLoaderComponent extends React.Component {
                     <div className={styles.title}>
                         {mainMessages[this.props.messageId]}
                     </div>
+                    <div className={styles.subHeading}>
+                        {subMessages[this.props.subheadingId]}
+                    </div>
                     <div className={styles.messageContainerOuter}>
                         <div
                             className={styles.messageContainerInner}
@@ -114,11 +127,13 @@ class SharingLoaderComponent extends React.Component {
 
 SharingLoaderComponent.propTypes = {
     isFullScreen: PropTypes.bool,
-    messageId: PropTypes.string
+    messageId: PropTypes.string,
+    subheadingId: PropTypes.string
 };
 SharingLoaderComponent.defaultProps = {
     isFullScreen: false,
-    messageId: 'gui.shareLoader.headline'
+    messageId: 'gui.shareLoader.headline',
+    subheadingId: 'gui.shareLoader.subHeadline'
 };
 
 export default SharingLoaderComponent;
