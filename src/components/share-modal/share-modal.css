@@ -35,12 +35,17 @@
     user-select: none;
     width: 600px;
     color: $text-primary;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .body {
     background: hsla(0, 100%, 100%, 1);
     padding: 1.5rem 2.25rem;
+}
+
+.scrollable-content {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
 }
 
 .join-flow-input-title {

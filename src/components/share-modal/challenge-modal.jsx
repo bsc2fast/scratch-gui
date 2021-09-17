@@ -20,9 +20,8 @@ const ChallengeModal = props => (
         id="submitChallenge"
         onRequestClose={props.onCancel}
     >
-        <div>
+        <div className={styles.scrollableContent}>
             <Box className={styles.body}>
-
                 <div>
                     <div className={styles.challengeTitle}>
                         <FormattedMessage
