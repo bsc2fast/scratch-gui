@@ -12,6 +12,30 @@ const onClick = (onSubmit, uploadSubmissionCallback) => () => {
     onSubmit(uploadSubmissionCallback);
 };
 
+const options = [{
+    value: 'default',
+    text: 'Select Submission Category *',
+    disabled: true
+}, {
+    value: 'Under 10 years',
+    text: 'Under 10 years',
+    disabled: false
+},
+{
+    value: 'Between 10-12 years',
+    text: 'Between 10-12 years',
+    disabled: false
+}, {
+    value: 'Between 13-15 years',
+    text: 'Between 13-15 years',
+    disabled: false
+},
+{
+    value: 'Open category',
+    text: 'Open category',
+    disabled: false
+}];
+
 const ChallengeModal = props => (
     <Modal
         className={styles.modalContentLarge}
@@ -87,22 +111,10 @@ const ChallengeModal = props => (
                             autoComplete="off"
                             autoCorrect="off"
                             id="authorName"
-                            placeholder="First Name *"
+                            placeholder="Author Name *"
                             spellCheck="false"
                             onChange={props.onChangeFirstName}
                             value={props.firstName}
-                        />
-                        <input
-                            name="lastName"
-                            className={styles.fieldShort}
-                            autoCapitalize="off"
-                            autoComplete="off"
-                            autoCorrect="off"
-                            id="authorName"
-                            placeholder="Last Name *"
-                            spellCheck="false"
-                            onChange={props.onChangeLastName}
-                            value={props.lastName}
                         />
                     </div>
 
@@ -123,21 +135,22 @@ const ChallengeModal = props => (
 
                     <div>
                         <div className={styles.multiItemRow}>
-                            <input
-                                name="dob"
-                                type="text"
-                                /* eslint-disable-next-line no-return-assign,react/jsx-no-bind */
-                                onFocus={e => e.target.type = 'date'}
+                            <select
+                                name="category"
+                                id="category"
+                                defaultValue={props.category}
                                 className={styles.fieldShort}
-                                autoCapitalize="off"
-                                autoComplete="off"
-                                autoCorrect="off"
-                                id="dob"
-                                placeholder="Date of Birth *"
-                                spellCheck="false"
-                                value={props.dob}
-                                onChange={props.onChangeDOB}
-                            />
+                                onChange={props.onChangeCategory}
+                            >
+                                <option />
+                                {options.map(opt => (
+                                    <option
+                                        key={opt.value}
+                                        value={opt.value}
+                                        disabled={opt.disabled}
+                                    >{opt.text}
+                                    </option>))}
+                            </select>
                             <CountryList
                                 className={styles.fieldShort}
                                 onChange={props.onChangeCountry}
@@ -214,18 +227,16 @@ ChallengeModal.propTypes = {
     onChangeTitle: PropTypes.func.isRequired,
     onChangeDesc: PropTypes.func.isRequired,
     onChangeFirstName: PropTypes.func.isRequired,
-    onChangeLastName: PropTypes.func.isRequired,
     onChangeEmail: PropTypes.func.isRequired,
     onChangeCountry: PropTypes.func.isRequired,
-    onChangeDOB: PropTypes.func.isRequired,
+    onChangeCategory: PropTypes.func.isRequired,
     onChangeTerms: PropTypes.func.isRequired,
     projectName: PropTypes.string,
     projectDesc: PropTypes.string,
     firstName: PropTypes.string,
-    lastName: PropTypes.string,
     email: PropTypes.string,
     country: PropTypes.string,
-    dob: PropTypes.string,
+    category: PropTypes.string,
     terms: PropTypes.bool,
     isSubmitDisabled: PropTypes.bool
 };

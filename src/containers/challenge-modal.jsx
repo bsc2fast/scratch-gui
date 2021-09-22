@@ -18,21 +18,19 @@ class ChallengeModal extends React.Component {
             'handleChangeTitle',
             'handleChangeDesc',
             'handleChangeFirstName',
-            'handleChangeLastName',
             'handleChangeEmail',
             'handleChangeCountry',
             'handleTerms',
-            'handleDOB'
+            'handleCategory'
         ]);
 
         this.state = {
             projectName: '',
             projectDesc: '',
             firstName: '',
-            lastName: '',
             email: '',
             country: 'default',
-            dob: '',
+            category: 'default',
             terms: false,
             isSubmitDisabled: true
         };
@@ -58,12 +56,6 @@ class ChallengeModal extends React.Component {
         });
     }
 
-    handleChangeLastName (event) {
-        this.setState({lastName: event.target.value}, () => {
-            this.handleNonEmptyFields();
-        });
-    }
-
     handleChangeEmail (event) {
         this.setState({email: event.target.value}, () => {
             this.handleNonEmptyFields();
@@ -76,8 +68,8 @@ class ChallengeModal extends React.Component {
         });
     }
 
-    handleDOB (event) {
-        this.setState({dob: event.target.value}, () => {
+    handleCategory (event) {
+        this.setState({category: event.target.value}, () => {
             this.handleNonEmptyFields();
         });
     }
@@ -97,7 +89,7 @@ class ChallengeModal extends React.Component {
 
     handleNonEmptyFields () {
         this.setState({isSubmitDisabled: this.state.projectName.trim() === '' || this.state.firstName.trim() === '' ||
-                this.state.lastName.trim() === '' || this.state.email.trim() === '' || this.state.dob.trim() === '' ||
+                this.state.email.trim() === '' || this.state.category.trim() === 'default' ||
                 this.state.country.trim() === 'default' || !this.state.terms});
     }
 
@@ -107,10 +99,9 @@ class ChallengeModal extends React.Component {
                 projectName={this.state.projectName}
                 projectDesc={this.state.projectDesc}
                 firstName={this.state.firstName}
-                lastName={this.state.lastName}
                 email={this.state.email}
                 country={this.state.country}
-                dob={this.state.dob}
+                category={this.state.category}
                 terms={this.state.terms}
                 isSubmitDisabled={this.state.isSubmitDisabled}
                 onCancel={this.handleCancel}
@@ -118,10 +109,9 @@ class ChallengeModal extends React.Component {
                 onChangeTitle={this.handleChangeTitle}
                 onChangeDesc={this.handleChangeDesc}
                 onChangeFirstName={this.handleChangeFirstName}
-                onChangeLastName={this.handleChangeLastName}
                 onChangeEmail={this.handleChangeEmail}
                 onChangeCountry={this.handleChangeCountry}
-                onChangeDOB={this.handleDOB}
+                onChangeCategory={this.handleCategory}
                 onChangeTerms={this.handleTerms}
             />
         );
