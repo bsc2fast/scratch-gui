@@ -142,7 +142,6 @@ const ChallengeModal = props => (
                                 className={styles.fieldShort}
                                 onChange={props.onChangeCategory}
                             >
-                                <option />
                                 {options.map(opt => (
                                     <option
                                         key={opt.value}
