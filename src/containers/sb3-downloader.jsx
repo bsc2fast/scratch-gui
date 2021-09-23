@@ -66,7 +66,7 @@ class SB3Downloader extends React.Component {
                         action: 'Click',
                         label: 'Share Project'
                     });
-                    window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+                    window.open('https://padlet.com/KiwriousPlay/49fsmsyic2yhrfr1', '_blank');
                     this.props.onShareSuccess();
                 } else {
                     this.props.onShareFail();

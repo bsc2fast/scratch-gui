@@ -57,7 +57,7 @@ const ChallengeModal = props => (
                     <div className={styles.challengeDescription}>
                         <a
                             className={styles.challengeDescription}
-                            href="https://ahlab.org"
+                            href="https://challenge.kiwrious.com"
                             target="_blank"
                             referrerPolicy="no-referrer"
                             rel="noreferrer"
@@ -179,7 +179,7 @@ const ChallengeModal = props => (
                             id="gui.shareProject.agree"
                         />
                         <a
-                            href="https://ahlab.org"
+                            href="https://drive.google.com/file/d/1p47FfsM9dM91UBdUbb_HnWE1VVmaUwQJ/view"
                             target="_blank"
                             rel="noreferrer"
                         >

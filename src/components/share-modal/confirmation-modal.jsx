@@ -45,7 +45,7 @@ const ConfirmationModal = props => (
                         />
                         <a
                             className={styles.challengeDescription}
-                            href="https://ahlab.org"
+                            href="https://challenge.kiwrious.com/#h.vwme9f205pyc"
                             target="_blank"
                             rel="noreferrer"
                         >
