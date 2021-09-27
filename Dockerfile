@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine AS build-stage
 
 # ENV NODE_ENV=production
 WORKDIR /usr/src/scratch-gui
@@ -12,12 +12,14 @@ RUN npm install
 RUN rm -rf ./node_modules/scratch-vm
 COPY --from=scratchvm:latest /usr/src/scratch-vm ./node_modules/scratch-vm/
 
-# COPY ../ dest
+# Copy source
 COPY . .
 
+# Run build
+RUN npm run build
+
+FROM nginx:1.20.1 AS run-stage
+
+COPY --from=build-stage /usr/src/scratch-gui/build /usr/share/nginx/html
+
 EXPOSE 80
-
-# RUN chown -R node /usr/src/scratch-gui
-# USER node
-
-CMD ["npm", "start"]
