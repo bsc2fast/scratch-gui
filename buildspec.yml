@@ -25,7 +25,7 @@ phases:
       - export IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
       - echo IMAGE_NAME $IMAGE_NAME
 
-      - export VM_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - export VM_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$VM_IMAGE_REPO_NAME
       - echo VM_IMAGE_NAME $VM_IMAGE_NAME
 
       - echo Logging in to Amazon ECR...
