@@ -263,6 +263,6 @@ We provide [Scratch](https://scratch.mit.edu) free of charge, and want to keep i
 
 - pre-build docker image `scratchvm` from ../scartch-vm
 
-- build `docker build --rm  -t "scratchgui:latest" .`
-- run `docker run --rm -p 8080:80 "scratchgui:latest"`
+- build `docker build --build-arg BUILD_VERSION=0.0.0 --rm -t "scratchgui:0.0.0" .`
+- run `docker run --rm -p 8080:80 "scratchgui:0.0.0"`
 - open `http://localhost:8080`
