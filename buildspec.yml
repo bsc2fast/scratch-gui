@@ -1,0 +1,55 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo TASK_NAMES $TASK_NAMES
+      - echo CODEBUILD_BUILD_ID $CODEBUILD_BUILD_ID
+      - echo CODEBUILD_BUILD_NUMBER $CODEBUILD_BUILD_NUMBER
+      - echo CODEBUILD_SOURCE_VERSION $CODEBUILD_SOURCE_VERSION
+      - echo CODEBUILD_RESOLVED_SOURCE_VERSION $CODEBUILD_RESOLVED_SOURCE_VERSION
+
+      - "export PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\"\\s\\r,]//g' | xargs)"
+      - echo PACKAGE_VERSION "$PACKAGE_VERSION"
+      - echo ${#PACKAGE_VERSION}
+
+      - export IMAGE_TAG=$PACKAGE_VERSION
+      - echo IMAGE_TAG $IMAGE_TAG
+
+      - export SHORT_SHA=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | sed 's/^\w\+\s//g'  | cut -c1-8)
+      - echo SHORT_SHA $SHORT_SHA
+
+      - export BUILD_VERSION="$PACKAGE_VERSION-$SHORT_SHA"
+      - echo BUILD_VERSION $BUILD_VERSION
+
+      - export IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - echo IMAGE_NAME $IMAGE_NAME
+
+      - export VM_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$VM_IMAGE_REPO_NAME
+      - echo VM_IMAGE_NAME $VM_IMAGE_NAME
+
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+  install:
+    commands:
+      - docker login -u $dockerhub_username -p $dockerhub_password
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build --build-arg BUILD_VERSION=$BUILD_VERSION --build-arg SCRATCHVM_BUILD_IMAGE=$VM_IMAGE_NAME --rm  -t $IMAGE_NAME:$BUILD_VERSION .
+      - docker tag $IMAGE_NAME:$BUILD_VERSION $IMAGE_NAME:latest
+      - docker tag $IMAGE_NAME:$BUILD_VERSION $IMAGE_NAME:$PACKAGE_VERSION
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $IMAGE_NAME:$BUILD_VERSION
+      - docker push $IMAGE_NAME:$PACKAGE_VERSION
+      - docker push $IMAGE_NAME:latest
+      - n=$IMAGE_NAME:$BUILD_VERSION; array=(${TASK_NAMES// / }); for i in ${array[@]}; do printf "[{\"name\":\"$i\",\"imageUri\":\"$n\"}]" > imagedefinitions-${i}.json; done;
+
+artifacts:
+  files: imagedefinitions*.json
