@@ -12,7 +12,10 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
+const DotEnv = require('dotenv-webpack');
+
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
+const MODE = process.env.MODE || 'local';
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -135,8 +138,7 @@ module.exports = [
         plugins: base.plugins.concat([
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
-                'process.env.DEBUG': Boolean(process.env.DEBUG),
-                'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-178036040-4') + '"'
+                'process.env.DEBUG': Boolean(process.env.DEBUG)
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
@@ -178,7 +180,8 @@ module.exports = [
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
-            }])
+            }]),
+            new DotEnv({path: MODE === 'local' ? './.env' : './docker.env.list'})
         ])
     })
 ].concat(

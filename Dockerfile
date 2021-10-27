@@ -23,6 +23,8 @@ COPY . .
 # Update version number
 RUN npm version $BUILD_VERSION --no-git-tag-version
 
+ENV MODE="docker"
+
 # Run build
 RUN npm run build
 

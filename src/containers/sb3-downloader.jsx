@@ -11,6 +11,9 @@ import {
     closeLoadingShare, openShareModal
 } from '../reducers/modals.js';
 
+const CLOUD_RUN_SERVICE = (process.env.CLOUD_RUN_SERVICE || window.CLOUD_RUN_SERVICE);
+const PADLET_TARGET = (process.env.PADLET_TARGET || window.PADLET_TARGET);
+
 /**
  * Project saver component passes a downloadProject function to its child.
  * It expects this child to be a function with the signature
@@ -55,7 +58,7 @@ class SB3Downloader extends React.Component {
             formData.append('image', content);
 
             const request = new XMLHttpRequest();
-            request.open('POST', 'https://padlet-service-lshnmcrzlq-uc.a.run.app/api');
+            request.open('POST', CLOUD_RUN_SERVICE);
             request.send(formData);
 
             request.onload = () => {
@@ -65,7 +68,7 @@ class SB3Downloader extends React.Component {
                         action: 'Click',
                         label: 'Share Project'
                     });
-                    window.open('https://padlet.com/ychu898/49fsmsyic2yhrfr1', '_blank');
+                    window.open(PADLET_TARGET, '_blank');
                     this.props.onShareSuccess();
                 } else {
                     this.props.onShareFail();
