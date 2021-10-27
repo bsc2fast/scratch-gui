@@ -12,7 +12,7 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
-const DotEnv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const MODE = process.env.MODE || 'local';
@@ -181,7 +181,7 @@ module.exports = [
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
             }]),
-            new DotEnv({path: MODE === 'local' ? './.env' : './docker.env.list'})
+            new Dotenv({path: MODE === 'local' ? './.env' : './docker.env.list', systemvars: true})
         ])
     })
 ].concat(
