@@ -13,6 +13,12 @@ import BrowserModalComponent from '../components/browser-modal/browser-modal.jsx
 import supportedBrowser from '../lib/supported-browser';
 
 import styles from './index.css';
+import log from '../lib/log';
+
+// log environment variables
+log.info(`version ${window?.configs?.['APP_VERSION'] || process.env.APP_VERSION}`);
+log.info(`cloud_run_service ${window?.configs?.['CLOUD_RUN_SERVICE'] || process.env.CLOUD_RUN_SERVICE}`);
+log.info(`padlet_target ${window?.configs?.['PADLET_TARGET'] || process.env.PADLET_TARGET}`);
 
 // Register "base" page view
 analytics.pageview('/');

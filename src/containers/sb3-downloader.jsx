@@ -11,8 +11,8 @@ import {
     closeLoadingShare, openShareModal
 } from '../reducers/modals.js';
 
-const CLOUD_RUN_SERVICE = (process.env.CLOUD_RUN_SERVICE || window.CLOUD_RUN_SERVICE);
-const PADLET_TARGET = (process.env.PADLET_TARGET || window.PADLET_TARGET);
+const CLOUD_RUN_SERVICE = (window?.configs?.['CLOUD_RUN_SERVICE'] || process.env.CLOUD_RUN_SERVICE);
+const PADLET_TARGET = (window?.configs?.['PADLET_TARGET'] || process.env.PADLET_TARGET);
 
 /**
  * Project saver component passes a downloadProject function to its child.

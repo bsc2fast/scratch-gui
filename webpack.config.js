@@ -15,7 +15,7 @@ var postcssImport = require('postcss-import');
 const Dotenv = require('dotenv-webpack');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
-const MODE = process.env.MODE || 'local';
+const APP_VERSION = require('./package.json').version;
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -138,7 +138,8 @@ module.exports = [
         plugins: base.plugins.concat([
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
-                'process.env.DEBUG': Boolean(process.env.DEBUG)
+                'process.env.DEBUG': Boolean(process.env.DEBUG),
+                'process.env.APP_VERSION': '"' + APP_VERSION + '"'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'gui'],
@@ -181,7 +182,7 @@ module.exports = [
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
             }]),
-            new Dotenv({path: MODE === 'local' ? './.env' : './docker.env.list', systemvars: true})
+            new Dotenv()
         ])
     })
 ].concat(
