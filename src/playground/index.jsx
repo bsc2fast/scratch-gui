@@ -14,6 +14,10 @@ import supportedBrowser from '../lib/supported-browser';
 
 import styles from './index.css';
 
+import registerServiceWorker from '../registerServiceWorker';
+
+registerServiceWorker();
+
 // Register "base" page view
 analytics.pageview('/');
 

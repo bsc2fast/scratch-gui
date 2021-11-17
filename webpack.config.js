@@ -12,6 +12,8 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 
 const base = {
@@ -178,7 +180,12 @@ module.exports = [
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
-            }])
+            }]),
+            new WorkboxWebpackPlugin.GenerateSW({
+                // TODO: replace hardcoded values with env variables
+                mode: 'production',
+                maximumFileSizeToCacheInBytes: 2.5e+7
+            })
         ])
     })
 ].concat(
