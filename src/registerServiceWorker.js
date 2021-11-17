@@ -1,9 +1,18 @@
-import {Workbox} from 'workbox-window';
+import { Workbox } from 'workbox-window';
 
-const registerServiceWorker = function () {
+const registerServiceWorker = function() {
     // Check if the serviceWorker Object exists in the navigator object ( means if browser supports SW )
     if ('serviceWorker' in navigator) {
         const wb = new Workbox('service-worker.js');
+
+        wb.register()
+            .then(registration => {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+                // registration failed
+                console.log('ServiceWorker registration failed: ', err);
+            });
 
         wb.addEventListener('activated', event => {
             // `event.isUpdate` will be true if another version of the service
@@ -32,20 +41,13 @@ const registerServiceWorker = function () {
 
         wb.addEventListener('message', event => {
             if (event.data.type === 'CACHE_UPDATED') {
-                const {updatedURL} = event.data.payload;
+                const { updatedURL } = event.data.payload;
 
                 console.log(`A newer version of ${updatedURL} is available!`);
             }
         });
 
-        wb.register()
-            .then(registration => {
-                // Registration was successful
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, err => {
-                // registration failed
-                console.log('ServiceWorker registration failed: ', err);
-            });
+
     }
 };
 

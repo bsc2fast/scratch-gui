@@ -1,8 +1,7 @@
 {
     "name": "Kiwirious Play",
     "short_name": "Kiwirious Play",
-    "icons": [
-        {
+    "icons": [{
             "src": "./img/icons/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
@@ -15,7 +14,7 @@
     ],
     "start_url": "/",
     "display": "fullscreen",
-    "background_color": "#000000",
-    "theme_color": "#364250",
+    "background_color": "#da5712",
+    "theme_color": "#da5712",
     "orientation": "landscape"
 }
